@@ -1,0 +1,23 @@
+#topbanner {
+    background-color: #0080FF;
+    color: #ffffff;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+#topbanner h5 {
+    padding-top: 1rem;
+}
+#secondbanner {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+.hrleft {
+    border-right: 1px solid rgba(0,0,0,.1);
+}
+#fontbanner {
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+}
+#fontbanner p{
+    font-size: 0.8rem;
+}
