@@ -38,9 +38,9 @@
 <div class="container" id="fontbanner">
   <div class="row">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-      <form method="post" action="/add-participant">
+      <form method="post" action="/add-attendies">
         <div class="input-group mb-3">
-          <select class="custom-select" id="inputGroupSelect01">
+          <select class="custom-select" id="participant_id" name="participant_id">
             <option selected>Select your name</option>
             <?php if (!empty($ParticipantInfo)){foreach ($ParticipantInfo as $participant): ?>
               <option value="<?=h($participant->id)?>">
@@ -71,11 +71,11 @@
 
       <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
         <div class="input-group mb-3">
-          <select class="custom-select" id="inputGroupSelect01">
+          <select class="custom-select" id="time" name="time">
             <option selected>Select your time slot</option>
-            <option value="1">14.00 - 14.30</option>
-            <option value="2">15.00 - 15.30</option>
-            <option value="3">16.00 - 16.30</option>
+            <option value="14.00 - 14.30">14.00 - 14.30</option>
+            <option value="15.00 - 15.30">15.00 - 15.30</option>
+            <option value="16.00 - 16.30">16.00 - 16.30</option>
           </select>
         </div>
       </div>

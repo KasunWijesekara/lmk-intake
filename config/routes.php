@@ -51,7 +51,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'index']);
 
-    $routes->connect('/add-participants', ['controller' => 'Attendees', 'action' => 'addAttendies'], ['routeClass' => 'DashedRoute']);
+    $routes->connect('/add-attendies', ['controller' => 'Attendees', 'action' => 'addAttendies'], ['routeClass' => 'DashedRoute']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

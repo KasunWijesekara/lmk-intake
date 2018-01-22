@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Event\Event;
 /**
  * Attendees Controller
  *
@@ -18,22 +18,32 @@ class AttendeesController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function addQuotation()
+    public function addAttendies()
     {
         $this->viewBuilder()->layout(false);
-
+        //debug($this->request->data);die();
         $attendee = $this->Attendees->newEntity();
              if ($this->request->is('post')) {
                  $attendee = $this->Attendees->patchEntity($attendee, $this->request->data);
                  if ($this->Attendees->save($attendee)) {
+                        //debug($attendee->participant_id);
+                        $this->loadModel('Participants');
+                        //$participant = $this->Participants->newEntity();
+                        //$participant = $this->Participants->findById($attendee->participant_id);
+                        $participant = $this->Participants->get($attendee->participant_id, [
+            'contain' => []
+        ]);
+                        $participant->status = 0;
+                        $this->Participants->save($participant);
+                        //debug($participant->toArray());die();
                      $this->Flash->success(__('The attendee has been saved.'));
-                    return $this->redirect( '/attendee' );
+                    return $this->redirect( '/' );
                  } else {
                     $this->Flash->error(__('The attendee could not be saved. Please, try again.'));
-                    return $this->redirect( '/attendee' );
+                    return $this->redirect( '/' );
                  }
                  $this->Flash->error(__('Error.. Please, try again.'));
-                return $this->redirect( '/attendee' );
+                return $this->redirect( '/' );
              }
 
     }
