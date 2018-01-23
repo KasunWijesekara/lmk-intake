@@ -69,12 +69,19 @@ class PagesController extends AppController
 
     public function index()
     {
-     $this->viewBuilder()->layout('frontend');
+       $this->viewBuilder()->layout('frontend');
 
-     $this->loadModel('Participants');
-     $ParticipantInfo = $this->Participants->find('all');
-     $this->set('ParticipantInfo', $ParticipantInfo);
-     $this->set('_serialize', ['ParticipantInfo']);
- }
+       $this->loadModel('Participants');
+       $opts3['conditions'] =  array('Participants.status' => '1');
+       $ParticipantInfo = $this->Participants->find('all',$opts3);
+       $this->set('ParticipantInfo', $ParticipantInfo);
+       $this->set('_serialize', ['ParticipantInfo']);
+
+       $this->loadModel('Timeslots');
+       $opts4['conditions'] =  array('Timeslots.status' => '1');
+       $TimeslotsInfo = $this->Timeslots->find('all',$opts4);
+       $this->set('TimeslotsInfo', $TimeslotsInfo);
+       $this->set('_serialize', ['TimeslotsInfo']);
+   }
 
 }

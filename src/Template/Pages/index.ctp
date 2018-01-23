@@ -73,22 +73,21 @@
         <div class="input-group mb-3">
           <select class="custom-select" id="time" name="time">
             <option selected>Select your time slot</option>
-            <option value="14.00 - 14.30">14.00 - 14.30</option>
-            <option value="15.00 - 15.30">15.00 - 15.30</option>
-            <option value="16.00 - 16.30">16.00 - 16.30</option>
+            <?php if (!empty($TimeslotsInfo)){foreach ($TimeslotsInfo as $timeslot): ?>
+              <option value="<?=h($timeslot->time)?>">
+                <?=h($timeslot->time)?>
+              </option>
+            <?php endforeach;}?>
           </select>
         </div>
       </div>
 
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-
+        <input type="hidden" name="status" value="1">
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="button" class="btn btn-outline-danger">Reset</button>
       </form>
     </div>
-
-    
-
   </div>
 </div>
 
