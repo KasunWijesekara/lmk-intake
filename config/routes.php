@@ -53,6 +53,10 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/add-attendies', ['controller' => 'Attendees', 'action' => 'addAttendies'], ['routeClass' => 'DashedRoute']);
 
+     //user auth routes
+    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['routeClass' => 'DashedRoute']);
+    $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['routeClass' => 'DashedRoute']);
+
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */

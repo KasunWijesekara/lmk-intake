@@ -18,6 +18,7 @@ use Cake\Core\Configure;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
+use Cake\Event\Event;
 
 /**
  * Static content controller
@@ -27,7 +28,13 @@ use Cake\View\Exception\MissingTemplateException;
  * @link https://book.cakephp.org/3.0/en/controllers/pages-controller.html
  */
 class PagesController extends AppController
-{
+{ 
+
+  //Allowing un-auth'd users to view the homepage etc.
+  public function beforeFilter(Event $event)
+  {   
+    $this->Auth->allow();
+  }
 
     /**
      * Displays a view
@@ -40,48 +47,48 @@ class PagesController extends AppController
      */
     public function display(...$path)
     {
-        $count = count($path);
-        if (!$count) {
-            return $this->redirect('/');
-        }
-        if (in_array('..', $path, true) || in_array('.', $path, true)) {
-            throw new ForbiddenException();
-        }
-        $page = $subpage = null;
+      $count = count($path);
+      if (!$count) {
+        return $this->redirect('/');
+      }
+      if (in_array('..', $path, true) || in_array('.', $path, true)) {
+        throw new ForbiddenException();
+      }
+      $page = $subpage = null;
 
-        if (!empty($path[0])) {
-            $page = $path[0];
-        }
-        if (!empty($path[1])) {
-            $subpage = $path[1];
-        }
-        $this->set(compact('page', 'subpage'));
+      if (!empty($path[0])) {
+        $page = $path[0];
+      }
+      if (!empty($path[1])) {
+        $subpage = $path[1];
+      }
+      $this->set(compact('page', 'subpage'));
 
-        try {
-            $this->render(implode('/', $path));
-        } catch (MissingTemplateException $exception) {
-            if (Configure::read('debug')) {
-                throw $exception;
-            }
-            throw new NotFoundException();
+      try {
+        $this->render(implode('/', $path));
+      } catch (MissingTemplateException $exception) {
+        if (Configure::read('debug')) {
+          throw $exception;
         }
+        throw new NotFoundException();
+      }
     }
 
     public function index()
     {
-       $this->viewBuilder()->layout('frontend');
+     $this->viewBuilder()->layout('frontend');
 
-       $this->loadModel('Participants');
-       $opts3['conditions'] =  array('Participants.status' => '1');
-       $ParticipantInfo = $this->Participants->find('all',$opts3);
-       $this->set('ParticipantInfo', $ParticipantInfo);
-       $this->set('_serialize', ['ParticipantInfo']);
+     $this->loadModel('Participants');
+     $opts3['conditions'] =  array('Participants.status' => '1');
+     $ParticipantInfo = $this->Participants->find('all',$opts3);
+     $this->set('ParticipantInfo', $ParticipantInfo);
+     $this->set('_serialize', ['ParticipantInfo']);
 
-       $this->loadModel('Timeslots');
-       $opts4['conditions'] =  array('Timeslots.status' => '1');
-       $TimeslotsInfo = $this->Timeslots->find('all',$opts4);
-       $this->set('TimeslotsInfo', $TimeslotsInfo);
-       $this->set('_serialize', ['TimeslotsInfo']);
+     $this->loadModel('Timeslots');
+     $opts4['conditions'] =  array('Timeslots.status' => '1');
+     $TimeslotsInfo = $this->Timeslots->find('all',$opts4);
+     $this->set('TimeslotsInfo', $TimeslotsInfo);
+     $this->set('_serialize', ['TimeslotsInfo']);
    }
 
-}
+ }

@@ -21,62 +21,38 @@ class AttendeesController extends AppController
     public function addAttendies()
     {
         $this->viewBuilder()->layout(false);
-        //debug($this->request->data);die();
         $attendee = $this->Attendees->newEntity();
-             if ($this->request->is('post')) {
-                 $attendee = $this->Attendees->patchEntity($attendee, $this->request->data);
-                 if ($this->Attendees->save($attendee)) {
-                        //debug($attendee->participant_id);
-                        $this->loadModel('Participants');
-                        //$participant = $this->Participants->newEntity();
-                        //$participant = $this->Participants->findById($attendee->participant_id);
-                        $participant = $this->Participants->get($attendee->participant_id, [
-            'contain' => []
-        ]);
-                        $participant->status = 0;
-                        $this->Participants->save($participant);
-                        //debug($participant->toArray());die();
-                     $this->Flash->success(__('The attendee has been saved.'));
-                    return $this->redirect( '/' );
-                 } else {
-                    $this->Flash->error(__('The attendee could not be saved. Please, try again.'));
-                    return $this->redirect( '/' );
-                 }
-                 $this->Flash->error(__('Error.. Please, try again.'));
-                return $this->redirect( '/' );
-             }
-
+        if ($this->request->is('post')) {
+           $attendee = $this->Attendees->patchEntity($attendee, $this->request->data);
+           if ($this->Attendees->save($attendee)) {
+            $this->loadModel('Participants');
+            $participant = $this->Participants->get($attendee->participant_id, [
+                'contain' => []
+            ]);
+            $participant->status = 0;
+            $this->Participants->save($participant);
+            $this->Flash->adminsuccess(__('The attendee has been saved.'));
+            return $this->redirect( '/' );
+        } else {
+            $this->Flash->adminerror(__('The attendee could not be saved. Please, try again.'));
+            return $this->redirect( '/' );
+        }
+        $this->Flash->adminerror(__('Error.. Please, try again.'));
+        return $this->redirect( '/' );
     }
 
-    // public function addFromClient()
-    //  {
-    //      $this->viewBuilder()->layout(false);
-    //      $contact = $this->Contacts->newEntity();
-    //          if ($this->request->is('post')) {
-    //              $contact = $this->Contacts->patchEntity($contact, $this->request->data);
-
-    //              if ($this->Contacts->save($contact)) {
-    //                  $this->Flash->success(__('The contact has been saved.'));
-    //                 return $this->redirect( '/contact' );
-    //              } else {
-    //                 $this->Flash->error(__('The contact could not be saved. Please, try again.'));
-    //                 return $this->redirect( '/contact' );
-    //              }
-    //              $this->Flash->error(__('Error.. Please, try again.'));
-    //             return $this->redirect( '/contact' );
-    //          }
-    //  }
+}
 
 
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Participants']
-        ];
-        $attendees = $this->paginate($this->Attendees);
+public function index()
+{
+    $this->paginate = [
+        'contain' => ['Participants']
+    ];
+    $attendees = $this->paginate($this->Attendees);
 
-        $this->set(compact('attendees'));
-    }
+    $this->set(compact('attendees'));
+}
 
     /**
      * View method

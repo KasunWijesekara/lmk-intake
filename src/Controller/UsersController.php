@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Users Controller
@@ -11,7 +12,45 @@ use App\Controller\AppController;
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UsersController extends AppController
-{
+{   
+    public function initialize()
+  {
+    parent::initialize();
+    $this->loadComponent('Paginator');
+    $this->loadComponent('RequestHandler');
+  }
+
+  public function login()
+  {
+    $this->viewBuilder()->layout('loginlayout');
+    $this->set('title', 'Login Page');
+    if ($this->Auth->user()) {
+      return $this->redirect($this->Auth->redirectUrl());
+    }
+    if ($this->request->is('post')) {
+      $user = $this->Auth->identify();
+
+      if ($user["group_id"] == 1) {
+        $this->Auth->setUser($user);
+        $this->Flash->success(__('Welcome Administrator..'));
+        return $this->redirect($this->Auth->redirectUrl());
+      } else if ($user["group_id"] == 2) {
+        $this->Auth->setUser($user);
+        $this->Flash->success(__('Welcome User..'));
+        return $this->redirect($this->Auth->redirectUrl());
+      }
+      else {
+        $this->Flash->error(__('Incorrect inputs.. Please try again..'));
+      }
+    }
+  }
+
+
+
+  public function logout()
+  {
+    return $this->redirect($this->Auth->logout());
+  }
 
     /**
      * Index method
@@ -20,6 +59,9 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['Groups']
+        ];
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
@@ -35,7 +77,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => ['Groups']
         ]);
 
         $this->set('user', $user);
@@ -58,7 +100,8 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $this->set(compact('user'));
+        $groups = $this->Users->Groups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'groups'));
     }
 
     /**
@@ -82,7 +125,8 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $this->set(compact('user'));
+        $groups = $this->Users->Groups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'groups'));
     }
 
     /**

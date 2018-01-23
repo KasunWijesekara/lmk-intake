@@ -21,3 +21,10 @@
 #fontbanner p{
     font-size: 0.8rem;
 }
+#logincontainer {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+}
+#loginimagehead {
+    padding-bottom: 2rem;
+}

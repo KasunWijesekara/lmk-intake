@@ -88,6 +88,10 @@
         <button type="button" class="btn btn-outline-danger">Reset</button>
       </form>
     </div>
+
+    <div style="margin-top: 10px" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <p class="text-center"><?= $this->Flash->render() ?></p>
+    </div>
   </div>
 </div>
 
@@ -190,7 +194,7 @@
       map: map,
       title: 'TWC Innovations',
       animation: google.maps.Animation.DROP,
-      icon: 'http://twcwebs.com/lmk/tmp/marker.png'
+      icon: 'images/map-marker-icon.png'
     });
     marker.addListener('click', function() {
       infowindow.open(map, marker);

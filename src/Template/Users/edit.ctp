@@ -14,6 +14,8 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="users form large-9 medium-8 columns content">
@@ -24,6 +26,7 @@
             echo $this->Form->control('name');
             echo $this->Form->control('lastname');
             echo $this->Form->control('password');
+            echo $this->Form->control('group_id', ['options' => $groups]);
             echo $this->Form->control('status');
         ?>
     </fieldset>

@@ -26,7 +26,12 @@ use Cake\Event\Event;
  * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller
-{
+{   
+
+    public function beforeFilter(Event $event)
+  {
+       $this->Auth->allow(['display']);
+  }
 
     /**
      * Initialization hook method.
@@ -43,12 +48,44 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        $this->loadComponent('Auth', [
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'name',
+                        'password' => 'password'
+                    ],
+                    'scope' => [ 'status' => 1 ]
+                ]
+            ],
+             'authorize' => ['Controller'], // Added this line
+             'loginAction' => [
+               'controller' => 'Users',
+               'action' => 'login'
+           ],
+            //    'loginRedirect' => [
+            //     'controller' => 'Users',
+            //     'action' => 'index'
+            // ],
+           'loginRedirect' => [
+               'controller' => 'Users',
+               'action' => 'index',
+           ],
+           'logoutRedirect' => [
+            'controller' => 'Pages',
+               'action' => 'index',
 
-        /*
-         * Enable the following components for recommended CakePHP security settings.
-         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
-         */
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
+           ]
+       ]);
+    }
+
+    public function isAuthorized($user)
+    {
+    // Admin can access every action
+        if (isset($user['group_id']) && $user['group_id'] === 1) {
+            return true;
+        }
+    // Default deny
+        return false;
     }
 }
