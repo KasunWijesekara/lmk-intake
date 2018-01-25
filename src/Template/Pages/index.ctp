@@ -40,8 +40,8 @@
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
       <form method="post" action="/add-attendies">
         <div class="input-group mb-3">
-          <select class="custom-select" id="participant_id" name="participant_id">
-            <option selected>Select your name</option>
+          <select class="custom-select" id="participant_id" name="participant_id" required>
+            <option selected="selected" value="">Select your name</option>
             <?php if (!empty($ParticipantInfo)){foreach ($ParticipantInfo as $participant): ?>
               <option value="<?=h($participant->id)?>">
                 <?=h($participant->name)?>
@@ -63,15 +63,15 @@
 
 
 
-      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-outline-primary">
-            <input type="radio" name="date" id="date" autocomplete="off" value="16.01.2018"> 16th January
+          <label class="btn btn-outline-secondary">
+            <input type="radio" name="date" id="date" autocomplete="off" value="16.01.2018" required> 16th January
           </label>
           <label class="btn btn-outline-secondary">
             <input type="radio" name="date" id="date" autocomplete="off" value="17.01.2018"> 17th January
           </label>
-          <label class="btn btn-outline-primary">
+          <label class="btn btn-outline-secondary">
             <input type="radio" name="date" id="date" autocomplete="off" value="20.01.2018"> 20th January
           </label>
           <label class="btn btn-outline-secondary">
@@ -80,10 +80,10 @@
         </div>
       </div>
 
-      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+      <div class="col-12 col-sm-12 offset-3 col-md-6 offset-3 col-lg-6 offset-3 col-xl-6" style="padding-top: 2rem;">
         <div class="input-group mb-3">
-          <select class="custom-select" id="time" name="time">
-            <option selected>Select your time slot</option>
+          <select class="custom-select" id="time" name="time" required>
+            <option selected="selected" value="">Select your time slot</option>
             <?php if (!empty($TimeslotsInfo)){foreach ($TimeslotsInfo as $timeslot): ?>
               <option value="<?=h($timeslot->time)?>">
                 <?=h($timeslot->time)?>

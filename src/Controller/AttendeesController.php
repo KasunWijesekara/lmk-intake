@@ -12,7 +12,12 @@ use Cake\Event\Event;
  */
 class AttendeesController extends AppController
 {
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
 
+        $this->Auth->allow(['addAttendies']);
+    }
     /**
      * Index method
      *
@@ -23,8 +28,8 @@ class AttendeesController extends AppController
         $this->viewBuilder()->layout(false);
         $attendee = $this->Attendees->newEntity();
         if ($this->request->is('post')) {
-           $attendee = $this->Attendees->patchEntity($attendee, $this->request->data);
-           if ($this->Attendees->save($attendee)) {
+         $attendee = $this->Attendees->patchEntity($attendee, $this->request->data);
+         if ($this->Attendees->save($attendee)) {
             $this->loadModel('Participants');
             $participant = $this->Participants->get($attendee->participant_id, [
                 'contain' => []
