@@ -17,13 +17,13 @@
 
 <body>
   <!-- Loader  -->
-    <!-- <div id="loader">
+    <div id="loader">
         <div class="loader-container">
             <h3 class="loader-back-text">
                 <img style="width: 235px;" src="images/logo.png" alt="" class="loader"></h3>
                 <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
             </div>
-        </div> -->
+        </div>
         <!-- Loader  -->
 
   <?= $this->fetch('content') ?>
