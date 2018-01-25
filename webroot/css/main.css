@@ -28,3 +28,29 @@
 #loginimagehead {
     padding-bottom: 2rem;
 }
+.submitbtn {
+    border-right: 3px solid #ffffff;
+}
+#loader {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  vertical-align: middle;
+  background-color: #fbfbfb;
+  position:fixed;
+  display: table;
+  width: 100%;
+  top:0;
+  height: 100%;
+  min-height: 100%;
+  z-index:99999;
+}
+#loader i {
+  color: #758241;
+}
+.loader-container {
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
+  z-index: 12;
+  text-align: center;
+}

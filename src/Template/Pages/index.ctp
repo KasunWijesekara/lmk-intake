@@ -63,9 +63,20 @@
 
 
 
-      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-        <div class="input-group">
-          <input class="form-control" type="date" name="date" min="2017-12-31" max="2018-01-30" >
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-outline-primary">
+            <input type="radio" name="date" id="date" autocomplete="off" value="16.01.2018"> 16th January
+          </label>
+          <label class="btn btn-outline-secondary">
+            <input type="radio" name="date" id="date" autocomplete="off" value="17.01.2018"> 17th January
+          </label>
+          <label class="btn btn-outline-primary">
+            <input type="radio" name="date" id="date" autocomplete="off" value="20.01.2018"> 20th January
+          </label>
+          <label class="btn btn-outline-secondary">
+            <input type="radio" name="date" id="date" autocomplete="off" value="21.01.2018"> 21th January
+          </label>
         </div>
       </div>
 
@@ -84,8 +95,7 @@
 
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
         <input type="hidden" name="status" value="1">
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-outline-danger">Reset</button>
+        <button type="submit" class="btn btn-primary">Reserve Time Slot</button>
       </form>
     </div>
 
